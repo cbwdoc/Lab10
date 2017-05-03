@@ -17,7 +17,9 @@ import java.util.logging.Logger;
 
 public class StockDetailsFragment extends Fragment {
 
-    public static  String BUNDLE_KEY = "detailsFragment";
+    public static  String NAME_BUNDLE_KEY = "Name";
+    public static  String SHARE_BUNDLE_KEY = "SharePrice";
+    public static  String SYMBOL_BUNDLE_KEY = "Symbol";
 
     Logger log = Logger.getAnonymousLogger();
     View v;
@@ -28,8 +30,9 @@ public class StockDetailsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(BUNDLE_KEY, companyName.getText().toString());
-        outState.putString(BUNDLE_KEY, sharePrice.getText().toString());
+        outState.putString(NAME_BUNDLE_KEY, companyName.getText().toString());
+        outState.putString(SHARE_BUNDLE_KEY, sharePrice.getText().toString());
+        outState.putString(SYMBOL_BUNDLE_KEY, symbol);
     }
 
     public StockDetailsFragment() {
@@ -44,12 +47,22 @@ public class StockDetailsFragment extends Fragment {
         dayChart = (ImageView) layout.findViewById(R.id.day_chart);
         companyName = (TextView) layout.findViewById(R.id.company_name);
         sharePrice = (TextView) layout.findViewById(R.id.share_price);
+        // all values are held in savedInstanceState.mMap
+        if (savedInstanceState != null) {
+            log.info(savedInstanceState.getString(NAME_BUNDLE_KEY) + '\n'
+                    + savedInstanceState.getString(SHARE_BUNDLE_KEY) + '\n'
+                    + savedInstanceState.getString(SYMBOL_BUNDLE_KEY));
+            companyName.setText(savedInstanceState.getString(NAME_BUNDLE_KEY));
+            sharePrice.setText(savedInstanceState.getString(SHARE_BUNDLE_KEY));
+            displayChart(savedInstanceState.getString(SYMBOL_BUNDLE_KEY));
+            // execute pending transactions?
+        }
 
         return layout;
     }
 
     public void getChartAndSymbol(Stock stock) {
-        this.symbol = stock.getSymbol();
+        symbol = stock.getSymbol();
         Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + stock.getSymbol());
     }
 
