@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,52 +28,77 @@ import static java.security.AccessController.getContext;
 
 public class SearchActivity extends AppCompatActivity {
 
-    AutoCompleteTextView tickerQuery;
+    AutoCompleteTextView searchBar;
     ImageButton searchButton;
-    static SearchAdapter adapter;
-/*
+    SearchAdapter adapter;
+    JSONArray possibilities;
+    String tickerQuery;
+
     Handler queryHandler = new Handler(new Handler.Callback(){
         @Override
         public boolean handleMessage(Message msg){
 
             try {
-                JSONArray possCompanies = new JSONArray((String) msg.obj);
-
-                // populate AutoComplete with Company Names
-                SearchActivity.adapter = new SearchAdapter(getApplicationContext(), possCompanies);
-                // retain ticker symbols
+                possibilities = new JSONArray((String) msg.obj);
+                adapter.setJSONArray(possibilities);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return true;
         }
     });
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        tickerQuery = (AutoCompleteTextView) findViewById(R.id.search_bar);
+        searchBar = (AutoCompleteTextView) findViewById(R.id.search_bar);
+        searchBar.setThreshold(1);
         searchButton = (ImageButton) findViewById(R.id.search_button);
-/*
-        tickerQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        adapter = new SearchAdapter(getBaseContext(), android.R.layout.simple_list_item_1, possibilities);
+        searchBar.setAdapter(adapter);
 
+
+
+
+        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                tickerQuery = searchBar.getText().toString();
                 boolean handled = false;
-                if (!tickerQuery.getText().toString().isEmpty()) {
-                    if (actionId == EditorInfo.IME_ACTION_GO) {
-                        // searchHandler must be static or in this activity, but that causes more problems
-/*                        getNewQuote(tickerQuery.getText().toString(), MainActivity.searchHandler);
-                        handled = true;
-                    } else {
-                        lookupSymbol(tickerQuery.getText().toString(), queryHandler);
-                        handled = true;
+                if (tickerQuery.length() > searchBar.getThreshold()) {
+                    handled = true;
+                    // gets a JSONArray based on the first letter typed
+                    lookupSymbol(tickerQuery, queryHandler);
+                    while ((tickerQuery = searchBar.getText().toString())
+                            .length() > 0 && actionId == EditorInfo.IME_ACTION_GO) {
+                        for (int i = 0; i < adapter.companies.length(); i++) {
+                            try {
+                                if(!adapter.contains(tickerQuery, i)) {
+                                    adapter.remove(i);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                adapter.contract();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
 
                 return handled;
+            }
+        });
+/*
+        searchBar.getOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onClick(View view) throws JSONException {
+                for (int i = 0; i < possibilities.length(); i++)
+                    if(possibilities.getJSONObject(i).has(tickerQuery))
+                        sendSymbol(possibilities.getJSONObject(i).getString("Symbol"));
             }
         });
 */
@@ -80,21 +106,24 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (!tickerQuery.getText().toString().isEmpty()) {
-                    String response = tickerQuery.getText().toString();
-                    // takes user Input understood to be a ticker symbol
-                    Intent passIntent = new Intent();
-
-                    // assigns a Bundle with this info to passIntent.mExtras
-                    // MUST MATCH ARGUMENT OF data.getStringExtra(String)
-                    passIntent.putExtra("Symbol", response);
-                    //
-                    setResult(RESULT_OK, passIntent);
-                    // returns to MainActivity
-                    finish();
+                if (!searchBar.getText().toString().isEmpty()) {
+                    sendSymbol(searchBar.getText().toString());
                 }
             }
         });
+    }
+
+    private void sendSymbol(String response) {
+        // takes user Input understood to be a ticker symbol
+        Intent passIntent = new Intent();
+
+        // assigns a Bundle with this info to passIntent.mExtras
+        // MUST MATCH ARGUMENT OF data.getStringExtra(String)
+        passIntent.putExtra("Symbol", response);
+        //
+        setResult(RESULT_OK, passIntent);
+        // returns to MainActivity
+        finish();
     }
 
 
@@ -145,7 +174,7 @@ public class SearchActivity extends AppCompatActivity {
         };
         t.start();
     }
-    /*
+
     public void lookupSymbol(final String symbol, final Handler handler) {
 
         Thread t = new Thread() {
@@ -172,5 +201,5 @@ public class SearchActivity extends AppCompatActivity {
         };
         t.start();
     }
-    */
+
 }
