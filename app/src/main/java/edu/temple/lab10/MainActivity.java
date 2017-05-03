@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements StockListFragment
         }
     }
 
-    private void swapFragment() {
+    private void swapFragment(Stock stock) {
         Logger log = Logger.getAnonymousLogger();
         log.info("Fragments swapped");
         getFragmentManager()
@@ -239,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements StockListFragment
                 .addToBackStack(null)
                 .commit();
         getFragmentManager().executePendingTransactions();
+        detailsFrag.displayAll(stock);
     }
 
     public void stockSelected(Stock stock) {
@@ -246,8 +247,7 @@ public class MainActivity extends AppCompatActivity implements StockListFragment
             detailsFrag.displayAll(stock);
             getFragmentManager().executePendingTransactions();
         } else
-            swapFragment();
-
+            swapFragment(stock);
     }
 
     private void searchDialog() {
