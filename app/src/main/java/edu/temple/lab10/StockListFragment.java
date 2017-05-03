@@ -25,7 +25,7 @@ public class StockListFragment extends Fragment {
 
     public static  String BUNDLE_KEY = "portfolio";
 
-    stockSelectedInterface parent;
+    StockSelectedInterface parent;
 
     TextView promptText1, promptText2;
     ImageView promptImage;
@@ -86,7 +86,7 @@ public class StockListFragment extends Fragment {
         stockList.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((stockSelectedInterface) getActivity())
+                ((StockSelectedInterface) getActivity())
                         .stockSelected(portfolio.getStockAtIndex(i));
             }
         }));
@@ -110,7 +110,7 @@ public class StockListFragment extends Fragment {
         }
     }
 
-    public interface  stockSelectedInterface {
+    public interface  StockSelectedInterface {
         public void stockSelected(Stock stock);
     }
 }
