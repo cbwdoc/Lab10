@@ -17,11 +17,20 @@ import java.util.logging.Logger;
 
 public class StockDetailsFragment extends Fragment {
 
+    public static  String BUNDLE_KEY = "detailsFragment";
+
     Logger log = Logger.getAnonymousLogger();
     View v;
     ImageView dayChart;
     TextView companyName, sharePrice;
+    String symbol;
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(BUNDLE_KEY, companyName.getText().toString());
+        outState.putString(BUNDLE_KEY, sharePrice.getText().toString());
+    }
 
     public StockDetailsFragment() {
         // Required empty public constructor
@@ -39,8 +48,9 @@ public class StockDetailsFragment extends Fragment {
         return layout;
     }
 
-    public void displayChart(Stock stock) {
-        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s="+stock.getSymbol()).into(dayChart);
+    public void getChartAndSymbol(Stock stock) {
+        this.symbol = stock.getSymbol();
+        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + stock.getSymbol());
     }
 
     public void displayCompany(Stock stock) {
@@ -51,10 +61,14 @@ public class StockDetailsFragment extends Fragment {
         sharePrice.setText("$" + String.valueOf(stock.getPrice()));
     }
 
+    public void displayChart(String symbol) {
+        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + symbol);
+    }
+
     public void displayAll(Stock stock) {
         displayCompany(stock);
         displayPrice(stock);
-        displayChart(stock);
+        getChartAndSymbol(stock);
     }
 
 
