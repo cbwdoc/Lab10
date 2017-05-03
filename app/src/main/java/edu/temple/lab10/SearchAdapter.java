@@ -34,7 +34,7 @@ public class SearchAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         try {
-            return companies.getJSONObject(position);
+            return companies.getJSONObject(position).get("Name");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
