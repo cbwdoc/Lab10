@@ -3,7 +3,7 @@
     <string name="prompt1">Press</string>
     <string name="prompt2">to add a stock</string>
     <string name="add">Add</string>
-    <string name="search">Search ticker symbols</string>
+    <string name="search">Search companies or ticker symbols</string>
     <string name="no_search_results">No companies found with that symbol</string>
     <string name="stock_added">Added</string>
     <string name="already_have_stock">already added</string>
