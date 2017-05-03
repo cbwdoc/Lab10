@@ -1,32 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.temple.lab10.StockDetailsFragment">
+    tools:context="edu.temple.lab10.MainActivity"
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_margin="8dp"
+        android:layout_weight=".7"></FrameLayout>
+    <!-- The list is meant to be smaller. Giving it a higher weight feels counterintuitive, but it's working for me. -->
+    <FrameLayout
+        android:id="@+id/deets_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".3">
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/company_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="viewStart"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/share_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="viewEnd"
-            android:textSize="24sp" />
-
-        <ImageView
-            android:id="@+id/day_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>
