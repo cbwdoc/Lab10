@@ -1,13 +1,18 @@
 package edu.temple.lab10;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.AccessControlContext;
 
@@ -17,39 +22,63 @@ import java.security.AccessControlContext;
  * absolutely nothing about this part works yet
  */
 
-public class SearchAdapter extends BaseAdapter {
+public class SearchAdapter extends ArrayAdapter<JSONObject> {
 
     Context context;
     JSONArray companies;
+    String key;
 
-    public SearchAdapter(Context context, JSONArray companies) {
-        this.companies = companies;
+    public SearchAdapter(Context c, int resource, JSONArray array) {
+        super(c, resource);
+        companies = array;
     }
 
-    @Override
+    public SearchAdapter(@NonNull Context context, @LayoutRes int resource) {
+        super(context, resource);
+    }
+
+    public SearchAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId) {
+        super(context, resource, textViewResourceId);
+    }
+
+    public void setJSONArray(JSONArray array) {
+        companies = array;
+    }
+
     public int getCount() {
         return companies.length();
     }
 
-    @Override
-    public Object getItem(int position) {
-        try {
-            return companies.getJSONObject(position).get("Name");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public JSONObject getJSONObject(int i) throws JSONException {
+        return companies.getJSONObject(i);
+    }
+    public String getString(int i) throws JSONException{
+        return companies.getJSONObject(i).getString(key);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public void remove(int i) {
+        companies.remove(i);
     }
 
-    @Override
+    public boolean contains(String value, int i) throws JSONException {
+        return companies.getJSONObject(i).getString(key).contains(value);
+    }
+
+    public void contract() throws JSONException {
+    /*  String tmp = companies.toString();
+        companies = new JSONArray(tmp); */
+        companies = new JSONArray(companies.toString());
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView name = new TextView(context);
-        name.setTextSize(21);
-        return name;
+        super.getView(position, convertView, parent);
+        TextView tv = new TextView(context);
+        try {
+            tv.setText(companies.getJSONObject(position).getString(key).toString());
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return tv;
     }
 }
