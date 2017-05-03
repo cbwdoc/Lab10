@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Acciones</string>
+    <string name="prompt1">Presionar a</string>
+    <string name="prompt2">para agregar una acción</string>
+    <string name="add">Agregar</string>
+    <string name="search">Buscar los símbolos bursátiles</string>
+    <string name="no_search_results">No hay ninguna acción con este símbolo</string>
+    <string name="stock_added">Agregó</string>
+    <string name="already_have_stock">ya fue agregado</string>
+</resources>

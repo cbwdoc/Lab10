@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Actions</string>
+    <string name="prompt1">Appuyeer sur</string>
+    <string name="prompt2">pour ajouter une action</string>
+    <string name="add">Ajouter</string>
+    <string name="search">Rechercher les codes mnémoniques</string>
+    <string name="no_search_results">Il n\'y a aucun action avec ce code</string>
+    <string name="stock_added">Ajouta </string>
+    <string name="already_have_stock">a été déjà ajouté</string>
+</resources>

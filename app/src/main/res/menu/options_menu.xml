@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_stock_button"
+        android:actionViewClass="android.widget.EditText"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/add"
+        app:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
+</menu>
