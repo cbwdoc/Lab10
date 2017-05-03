@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity {
     AutoCompleteTextView tickerQuery;
     ImageButton searchButton;
     static SearchAdapter adapter;
-
+/*
     Handler queryHandler = new Handler(new Handler.Callback(){
         @Override
         public boolean handleMessage(Message msg){
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
             return true;
         }
     });
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 
         tickerQuery = (AutoCompleteTextView) findViewById(R.id.search_bar);
         searchButton = (ImageButton) findViewById(R.id.search_button);
-
+/*
         tickerQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity {
                         // searchHandler must be static or in this activity, but that causes more problems
 /*                        getNewQuote(tickerQuery.getText().toString(), MainActivity.searchHandler);
                         handled = true;
-*/                    } else {
+                    } else {
                         lookupSymbol(tickerQuery.getText().toString(), queryHandler);
                         handled = true;
                     }
@@ -75,7 +75,7 @@ public class SearchActivity extends AppCompatActivity {
                 return handled;
             }
         });
-
+*/
         // listens for the Dialog Button
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -145,6 +145,7 @@ public class SearchActivity extends AppCompatActivity {
         };
         t.start();
     }
+    /*
     public void lookupSymbol(final String symbol, final Handler handler) {
 
         Thread t = new Thread() {
@@ -171,4 +172,5 @@ public class SearchActivity extends AppCompatActivity {
         };
         t.start();
     }
+    */
 }
