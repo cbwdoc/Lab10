@@ -29,7 +29,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StockListFragment.StockSelectedInterface {
 
     private final int POPUP_ACTIVITY = 1;
 
@@ -73,12 +73,13 @@ public class MainActivity extends AppCompatActivity {
             portfolio.getStockAtIndex(msg.arg1).setPrice(newPrice);
 
             Context c = MainActivity.this;
+/*          Replace Toasts with Logger
             Toast update = Toast.makeText(c, "Updated "
                             + portfolio.getStockAtIndex(msg.arg1).getSymbol()
                             + " to $" + String.valueOf(newPrice),
                     Toast.LENGTH_SHORT);
             update.show();
-
+*/
             return false;
         }
     });
@@ -201,11 +202,11 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.list_fragment, listFrag)
                 .commit();
 
-        detailsFrag = new StockDetailsFragment();
+
         if(bothFrags) {
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.list_fragment, listFrag)
+                    .replace(R.id.deets_fragment, detailsFrag)
                     .commit();
         }
     }
@@ -292,8 +293,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updatePortfolio() {
-        Context c = MainActivity.this;
-        Toast updates = null;
 
         if (connected) {
             try {
