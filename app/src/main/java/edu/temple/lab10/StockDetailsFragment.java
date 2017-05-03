@@ -64,7 +64,7 @@ public class StockDetailsFragment extends Fragment {
 
     public void getChartAndSymbol(Stock stock) {
         symbol = stock.getSymbol();
-        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + stock.getSymbol());
+        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + stock.getSymbol()).into(dayChart);
     }
 
     public void displayCompany(Stock stock) {
@@ -76,7 +76,7 @@ public class StockDetailsFragment extends Fragment {
     }
 
     public void displayChart(String symbol) {
-        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + symbol);
+        Picasso.with(dayChart.getContext()).load("https://chart.yahoo.com/z?t=1d&s=" + symbol).into(dayChart);
     }
 
     public void displayAll(Stock stock) {
