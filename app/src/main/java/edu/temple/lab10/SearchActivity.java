@@ -160,10 +160,9 @@ public class SearchActivity extends AppCompatActivity {
                             new InputStreamReader(
                                     symbolUrl.openStream()));
                     String response = reader.readLine();
-                    JSONArray possSymbolArray = new JSONArray(response);
+                    JSONArray names = new JSONArray(response);
                     Message msg = Message.obtain();
-                    msg.arg1 = 2;
-                    msg.obj = possSymbolArray;
+                    msg.obj = names;
                     handler.sendMessage(msg);
                 } catch (Exception e) {
                     e.printStackTrace();
