@@ -49,6 +49,7 @@ public class StockDetailsFragment extends Fragment {
         sharePrice = (TextView) layout.findViewById(R.id.share_price);
         // all values are held in savedInstanceState.mMap
         if (savedInstanceState != null) {
+            // not working in Android Studio 2.3.1 for Windows 10
             log.info(savedInstanceState.getString(NAME_BUNDLE_KEY) + '\n'
                     + savedInstanceState.getString(SHARE_BUNDLE_KEY) + '\n'
                     + savedInstanceState.getString(SYMBOL_BUNDLE_KEY));
