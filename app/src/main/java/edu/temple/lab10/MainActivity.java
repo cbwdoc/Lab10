@@ -72,14 +72,8 @@ public class MainActivity extends AppCompatActivity implements StockListFragment
             // write to file : msg.arg1 is the index given at the updatePortfolio function
             portfolio.getStockAtIndex(msg.arg1).setPrice(newPrice);
 
-            Context c = MainActivity.this;
-/*          Replace Toasts with Logger
-            Toast update = Toast.makeText(c, "Updated "
-                            + portfolio.getStockAtIndex(msg.arg1).getSymbol()
-                            + " to $" + String.valueOf(newPrice),
-                    Toast.LENGTH_SHORT);
-            update.show();
-*/
+            log.info("Updated " + portfolio.getStockAtIndex(msg.arg1).getSymbol()
+                        + " to $" + String.valueOf(newPrice));
             return false;
         }
     });
