@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        android:layout_weight=".5"></FrameLayout>
-
+        android:layout_weight=".7"></FrameLayout>
+    <!-- The list is meant to be smaller. Giving it a higher weight feels counterintuitive, but it worked for me. -->
+    
     <FrameLayout
         android:id="@+id/deets_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".5">
+        android:layout_weight=".3">
     </FrameLayout>
 
 </LinearLayout>
