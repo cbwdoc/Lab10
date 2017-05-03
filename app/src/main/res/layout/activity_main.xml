@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:layout_weight=".7"></FrameLayout>
-    <!-- The list is meant to be smaller. Giving it a higher weight feels counterintuitive, but it worked for me. -->
+    <!-- The list is meant to be smaller. Giving it a higher weight feels counterintuitive, but it's working for me. -->
     
     <FrameLayout
         android:id="@+id/deets_fragment"
