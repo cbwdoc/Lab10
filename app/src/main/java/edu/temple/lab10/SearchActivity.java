@@ -29,25 +29,7 @@ public class SearchActivity extends AppCompatActivity {
 
     AutoCompleteTextView tickerQuery;
     ImageButton searchButton;
-    static SearchAdapter adapter;
-/*
-    Handler queryHandler = new Handler(new Handler.Callback(){
-        @Override
-        public boolean handleMessage(Message msg){
 
-            try {
-                JSONArray possCompanies = new JSONArray((String) msg.obj);
-
-                // populate AutoComplete with Company Names
-                SearchActivity.adapter = new SearchAdapter(getApplicationContext(), possCompanies);
-                // retain ticker symbols
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-    });
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,27 +37,7 @@ public class SearchActivity extends AppCompatActivity {
 
         tickerQuery = (AutoCompleteTextView) findViewById(R.id.search_bar);
         searchButton = (ImageButton) findViewById(R.id.search_button);
-/*
-        tickerQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (!tickerQuery.getText().toString().isEmpty()) {
-                    if (actionId == EditorInfo.IME_ACTION_GO) {
-                        // searchHandler must be static or in this activity, but that causes more problems
-/*                        getNewQuote(tickerQuery.getText().toString(), MainActivity.searchHandler);
-                        handled = true;
-                    } else {
-                        lookupSymbol(tickerQuery.getText().toString(), queryHandler);
-                        handled = true;
-                    }
-                }
-
-                return handled;
-            }
-        });
-*/
         // listens for the Dialog Button
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -145,32 +107,4 @@ public class SearchActivity extends AppCompatActivity {
         };
         t.start();
     }
-    /*
-    public void lookupSymbol(final String symbol, final Handler handler) {
-
-        Thread t = new Thread() {
-
-            @Override
-            public void run() {
-
-                URL symbolUrl;
-
-                try {
-                    symbolUrl = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=" + symbol);
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(
-                                    symbolUrl.openStream()));
-                    String response = reader.readLine();
-                    JSONArray names = new JSONArray(response);
-                    Message msg = Message.obtain();
-                    msg.obj = names;
-                    handler.sendMessage(msg);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        t.start();
-    }
-    */
 }
